@@ -1,32 +1,21 @@
 @extends('admin.app')
 @section('admin_content')
     <div class="row">
-        <div class="col-12">
-            <div class="page-title-box">
-                <div class="page-title-right">
-                    <ol class="breadcrumb m-0">
-                        <li class="breadcrumb-item"><a href="javascript: void(0);">ETL</a></li>
-                        <li class="breadcrumb-item"><a href="javascript: void(0);">Permission Manage</a></li>
-                        <li class="breadcrumb-item active">Users Management!</li>
-                    </ol>
-                </div>
-                <h4 class="page-title">Users Management!</h4>
+        <div class="col-lg-12 margin-tb">
+            <div class="pull-left">
+                <h2>Users Management</h2>
+            </div>
+            <div class="pull-right">
+                <a class="btn btn-success mb-2" href="{{ route('users.create') }}"><i class="fa fa-plus"></i> Create New User</a>
             </div>
         </div>
     </div>
 
-
-    @if ($message = Session::get('success'))
-        <div class="alert alert-success">
-            <p>{{ $message }}</p>
-        </div>
-    @endif
-    <div class="card-header">
-        <div class="d-flex justify-content-end">
-            <a class="btn btn-success" href="{{ route('users.create') }}"> Create New User</a>
-        </div>
+    @session('success')
+    <div class="alert alert-success" role="alert">
+        {{ $value }}
     </div>
-    <br>
+    @endsession
 
     <table class="table table-bordered">
         <tr>
@@ -44,23 +33,27 @@
                 <td>
                     @if(!empty($user->getRoleNames()))
                         @foreach($user->getRoleNames() as $v)
-                            <label class="badge badge-success">{{ $v }}</label>
+                            <label class="badge bg-success">{{ $v }}</label>
                         @endforeach
                     @endif
                 </td>
                 <td>
-                    <a class="btn btn-info" href="{{ route('users.show',$user->id) }}">Show</a>
-                    <a class="btn btn-primary" href="{{ route('users.edit',$user->id) }}">Edit</a>
-                    {!! Form::open(['method' => 'DELETE','route' => ['users.destroy', $user->id],'style'=>'display:inline']) !!}
-                    {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
-                    {!! Form::close() !!}
+                    <a class="btn btn-info btn-sm" href="{{ route('users.show',$user->id) }}"><i class="fa-solid fa-list"></i> Show</a>
+                    <a class="btn btn-primary btn-sm" href="{{ route('users.edit',$user->id) }}"><i class="fa-solid fa-pen-to-square"></i> Edit</a>
+                    <form method="POST" action="{{ route('users.destroy', $user->id) }}" style="display:inline">
+                        @csrf
+                        @method('DELETE')
+
+                        <button type="submit" class="btn btn-danger btn-sm"><i class="fa-solid fa-trash"></i> Delete</button>
+                    </form>
                 </td>
             </tr>
         @endforeach
     </table>
 
+    {!! $data->links('pagination::bootstrap-5') !!}
 
-    {!! $data->render() !!}
+    <p class="text-center text-primary"><small>Tutorial by ItSolutionStuff.com</small></p>
 
 
 @endsection

@@ -2,38 +2,27 @@
 @section('admin_content')
 
     <div class="row">
-        <div class="col-12">
-            <div class="page-title-box">
-                <div class="page-title-right">
-                    <ol class="breadcrumb m-0">
-                        <li class="breadcrumb-item"><a href="javascript: void(0);">ETL</a></li>
-                        <li class="breadcrumb-item"><a href="javascript: void(0);">Permission Manage</a></li>
-                        <li class="breadcrumb-item active">Role Management!</li>
-                    </ol>
-                </div>
-                <h4 class="page-title">Role Management!</h4>
+        <div class="col-lg-12 margin-tb">
+            <div class="pull-left">
+                <h2>Role Management</h2>
+            </div>
+            <div class="pull-right">
+                @can('role-create')
+                    <a class="btn btn-success btn-sm mb-2" href="{{ route('roles.create') }}"><i class="fa fa-plus"></i> Create New Role</a>
+                @endcan
             </div>
         </div>
     </div>
-    <div class="card-header">
-        <div class="d-flex justify-content-end">
-            @can('role-create')
-                <a class="btn btn-success" href="{{ route('roles.create') }}"> Create New Role</a>
-            @endcan
-        </div>
+
+    @session('success')
+    <div class="alert alert-success" role="alert">
+        {{ $value }}
     </div>
-    <br>
-
-    @if ($message = Session::get('success'))
-        <div class="alert alert-success">
-            <p>{{ $message }}</p>
-        </div>
-    @endif
-
+    @endsession
 
     <table class="table table-bordered">
         <tr>
-            <th>No</th>
+            <th width="100px">No</th>
             <th>Name</th>
             <th width="280px">Action</th>
         </tr>
@@ -42,21 +31,26 @@
                 <td>{{ ++$i }}</td>
                 <td>{{ $role->name }}</td>
                 <td>
-                    <a class="btn btn-info" href="{{ route('roles.show',$role->id) }}">Show</a>
+                    <a class="btn btn-info btn-sm" href="{{ route('roles.show',$role->id) }}"><i class="fa-solid fa-list"></i> Show</a>
                     @can('role-edit')
-                        <a class="btn btn-primary" href="{{ route('roles.edit',$role->id) }}">Edit</a>
+                        <a class="btn btn-primary btn-sm" href="{{ route('roles.edit',$role->id) }}"><i class="fa-solid fa-pen-to-square"></i> Edit</a>
                     @endcan
+
                     @can('role-delete')
-                        {!! Form::open(['method' => 'DELETE','route' => ['roles.destroy', $role->id],'style'=>'display:inline']) !!}
-                        {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
-                        {!! Form::close() !!}
+                        <form method="POST" action="{{ route('roles.destroy', $role->id) }}" style="display:inline">
+                            @csrf
+                            @method('DELETE')
+
+                            <button type="submit" class="btn btn-danger btn-sm"><i class="fa-solid fa-trash"></i> Delete</button>
+                        </form>
                     @endcan
                 </td>
             </tr>
         @endforeach
     </table>
 
+    {!! $roles->links('pagination::bootstrap-5') !!}
 
-    {!! $roles->render() !!}
+    <p class="text-center text-primary"><small>Tutorial by ItSolutionStuff.com</small></p>
 
 @endsection

@@ -85,10 +85,10 @@
     <div class="leftside-menu">
         <a href="{{route('dashboard')}}" class="logo logo-light">
             <span class="logo-lg">
-                <img src="{{URL::to('backend/images/etl_logo.png')}}" alt="logo" style="height: 50px;">
+                <img src="{{URL::to('backend/images/logo.png')}}" alt="logo" style="height: 20px;">
             </span>
             <span class="logo-sm">
-                <img src="{{URL::to('backend/images/etl_logo.png')}}" alt="small logo">
+                <img src="{{URL::to('backend/images/logo.png')}}" alt="small logo" style="height: 20px;">
             </span>
         </a>
 
@@ -118,6 +118,15 @@
                             </ul>
                         </div>
                     </li>
+                @endcan
+
+                @can('slider-list')
+                <li class="side-nav-item">
+                    <a href="{{route('slider.list')}}" class="side-nav-link">
+                        <i class="ri-dashboard-3-line"></i>
+                        <span> Slider </span>
+                    </a>
+                </li>
                 @endcan
 
 
@@ -202,17 +211,12 @@
 <script src="{{asset('backend/js/pages/datatable.init.js')}}"></script>
 <script src="{{asset('backend/js/pages/dashboard.js')}}"></script>
 <script src="{{asset('backend/js/app.min.js')}}"></script>
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        ClassicEditor.create(document.querySelector('#content'))
-            .catch(error => {
-                console.error(error);
-            });
-
-        ClassicEditor.create(document.querySelector('#contentAdd'))
-            .catch(error => {
-                console.error(error);
-            });
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('.form-control[multiple]').select2({
+            allowClear: true
+        });
     });
 </script>
 

@@ -31,6 +31,13 @@ class PermissionTableSeeder extends Seeder
             'card-list',
 
 
+            //For Slider
+            'slider-list',
+            'slider-create',
+            'slider-edit',
+            'slider-delete',
+
+
 
         ];
         foreach ($permissions as $permission) {

@@ -1,27 +1,15 @@
 @extends('admin.app')
 @section('admin_content')
-
     <div class="row">
-        <div class="col-12">
-            <div class="page-title-box">
-                <div class="page-title-right">
-                    <ol class="breadcrumb m-0">
-                        <li class="breadcrumb-item"><a href="javascript: void(0);">ETL</a></li>
-                        <li class="breadcrumb-item"><a href="javascript: void(0);">Permission Manage</a></li>
-                        <li class="breadcrumb-item active">Create User!</li>
-                    </ol>
-                </div>
-                <h4 class="page-title">Create User!</h4>
+        <div class="col-lg-12 margin-tb">
+            <div class="pull-left">
+                <h2>Create New User</h2>
+            </div>
+            <div class="pull-right">
+                <a class="btn btn-primary btn-sm mb-2" href="{{ route('users.index') }}"><i class="fa fa-arrow-left"></i> Back</a>
             </div>
         </div>
     </div>
-    <div class="card-header">
-        <div class="d-flex justify-content-end">
-            <a class="btn btn-success" href="{{ route('users.index') }}">Back</a>
-        </div>
-    </div>
-    <br>
-
 
     @if (count($errors) > 0)
         <div class="alert alert-danger">
@@ -34,43 +22,50 @@
         </div>
     @endif
 
+    <form method="POST" action="{{ route('users.store') }}">
+        @csrf
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="form-group">
+                    <strong>Name:</strong>
+                    <input type="text" name="name" placeholder="Name" class="form-control">
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="form-group">
+                    <strong>Email:</strong>
+                    <input type="email" name="email" placeholder="Email" class="form-control">
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="form-group">
+                    <strong>Password:</strong>
+                    <input type="password" name="password" placeholder="Password" class="form-control">
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="form-group">
+                    <strong>Confirm Password:</strong>
+                    <input type="password" name="confirm-password" placeholder="Confirm Password" class="form-control">
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="form-group">
+                    <strong>Role:</strong>
+                    <select name="roles[]" class="form-control" multiple="multiple">
+                        @foreach ($roles as $value => $label)
+                            <option value="{{ $value }}">
+                                {{ $label }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 text-center">
+                <button type="submit" class="btn btn-primary btn-sm mt-2 mb-3"><i class="fa-solid fa-floppy-disk"></i> Submit</button>
+            </div>
+        </div>
+    </form>
 
-
-    {!! Form::open(array('route' => 'users.store','method'=>'POST')) !!}
-    <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
-                <strong>Name:</strong>
-                {!! Form::text('name', null, array('placeholder' => 'Name','class' => 'form-control')) !!}
-            </div>
-        </div>
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
-                <strong>Email:</strong>
-                {!! Form::text('email', null, array('placeholder' => 'Email','class' => 'form-control')) !!}
-            </div>
-        </div>
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
-                <strong>Password:</strong>
-                {!! Form::password('password', array('placeholder' => 'Password','class' => 'form-control')) !!}
-            </div>
-        </div>
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
-                <strong>Confirm Password:</strong>
-                {!! Form::password('confirm-password', array('placeholder' => 'Confirm Password','class' => 'form-control')) !!}
-            </div>
-        </div>
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
-                <strong>Role:</strong>
-                {!! Form::select('roles[]', $roles,[], array('class' => 'form-control','multiple')) !!}
-            </div>
-        </div>
-        <div class="mt-1 d-flex justify-content-end">
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </div>
-    </div>
-    {!! Form::close() !!}
+    <p class="text-center text-primary"><small>Tutorial by ItSolutionStuff.com</small></p>
 @endsection
