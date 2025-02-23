@@ -1,9 +1,7 @@
 <?php
 
 use App\Http\Controllers\admin\AdminDashboardController;
-use App\Http\Controllers\admin\RoleController;
-use App\Http\Controllers\admin\UserController;
-use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RoleController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {

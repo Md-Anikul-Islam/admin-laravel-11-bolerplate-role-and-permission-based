@@ -5,22 +5,17 @@
     <title>Dashboard | Admin Dashboard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="A fully responsive admin theme which can be used to build CRM, CMS,ERP etc." name="description" />
-    <meta content="Admin Dashboard" name="author" />
-    <link rel="shortcut icon" href="{{asset('backend/images/in.png')}}">
+    <meta content="SDMGA" name="author" />
+    <link rel="shortcut icon" href="{{asset('backend/images/favicon.ico')}}">
     <!-- Select2 css -->
     <link href="{{asset('backend/vendor/select2/css/select2.min.css')}}" rel="stylesheet" type="text/css" />
     <!-- Datatables css -->
     <link href="{{asset('backend/vendor/datatables.net-bs5/css/dataTables.bootstrap5.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{asset('backend/vendor/datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css')}}" rel="stylesheet"
-          type="text/css" />
-    <link href="{{asset('backend/vendor/datatables.net-fixedcolumns-bs5/css/fixedColumns.bootstrap5.min.css')}}" rel="stylesheet"
-          type="text/css" />
-    <link href="{{asset('backend/vendor/datatables.net-fixedheader-bs5/css/fixedHeader.bootstrap5.min.css')}}" rel="stylesheet"
-          type="text/css" />
-    <link href="{{asset('backend/vendor/datatables.net-buttons-bs5/css/buttons.bootstrap5.min.css')}}" rel="stylesheet"
-          type="text/css" />
-    <link href="{{asset('backend/vendor/datatables.net-select-bs5/css/select.bootstrap5.min.css')}}" rel="stylesheet"
-          type="text/css" />
+    <link href="{{asset('backend/vendor/datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{asset('backend/vendor/datatables.net-fixedcolumns-bs5/css/fixedColumns.bootstrap5.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{asset('backend/vendor/datatables.net-fixedheader-bs5/css/fixedHeader.bootstrap5.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{asset('backend/vendor/datatables.net-buttons-bs5/css/buttons.bootstrap5.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{asset('backend/vendor/datatables.net-select-bs5/css/select.bootstrap5.min.css')}}" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="{{asset('backend/vendor/daterangepicker/daterangepicker.css')}}">
     <link rel="stylesheet" href="{{asset('backend/vendor/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.css')}}">
     <script src="{{asset('backend/js/config.js')}}"></script>
@@ -90,10 +85,10 @@
     <div class="leftside-menu">
         <a href="{{route('dashboard')}}" class="logo logo-light">
             <span class="logo-lg">
-                <img src="{{URL::to('backend/images/in.png')}}" alt="logo" style="height: 50px;">
+                <img src="{{URL::to('backend/images/etl_logo.png')}}" alt="logo" style="height: 50px;">
             </span>
             <span class="logo-sm">
-                <img src="{{URL::to('backend/images/in.png')}}" alt="small logo">
+                <img src="{{URL::to('backend/images/etl_logo.png')}}" alt="small logo">
             </span>
         </a>
 
@@ -106,21 +101,50 @@
                         <span> Dashboard </span>
                     </a>
                 </li>
+                @can('resource-list')
+                    <li class="side-nav-item">
+                        <a data-bs-toggle="collapse" href="#sidebarPages" aria-expanded="false" aria-controls="sidebarPages" class="side-nav-link">
+                            <i class="ri-pages-line"></i>
+                            <span> Resource </span>
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <div class="collapse" id="sidebarPages">
+                            <ul class="side-nav-second-level">
 
-                <li class="side-nav-item">
-                    <a data-bs-toggle="collapse" href="#sidebarPages" aria-expanded="false" aria-controls="sidebarPages" class="side-nav-link">
-                        <i class="ri-pages-line"></i>
-                        <span> Category </span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <div class="collapse" id="sidebarPages">
-                        <ul class="side-nav-second-level">
-                            <li>
-                                <a href="{{route('category.section')}}">Category List</a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
+                                    <li>
+                                        <a href="#">News</a>
+                                    </li>
+
+                            </ul>
+                        </div>
+                    </li>
+                @endcan
+
+
+                @can('role-and-permission-list')
+                    <li class="side-nav-item">
+                        <a data-bs-toggle="collapse" href="#sidebarPages1" aria-expanded="false" aria-controls="sidebarPages" class="side-nav-link">
+                            <i class="ri-rotate-lock-line"></i>
+                            <span>Permission Manage </span>
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <div class="collapse" id="sidebarPages1">
+                            <ul class="side-nav-second-level">
+                                @can('user-list')
+                                    <li>
+                                        <a href="{{url('users')}}">Create User</a>
+                                    </li>
+                                @endcan
+
+                                @can('role-list')
+                                    <li>
+                                        <a href="{{url('roles')}}">Role & Permission</a>
+                                    </li>
+                                @endcan
+                            </ul>
+                        </div>
+                    </li>
+                @endcan
             </ul>
             <div class="clearfix"></div>
         </div>
@@ -149,6 +173,7 @@
 <!-- Dropzone File Upload js -->
 <script src="{{asset('backend/vendor/dropzone/min/dropzone.min.js')}}"></script>
 <script src="{{asset('backend/js/pages/fileupload.init.js')}}"></script>
+
 <!--  Select2 Plugin Js -->
 <script src="{{asset('backend/vendor/select2/js/select2.min.js')}}"></script>
 <script src="{{asset('backend/vendor/daterangepicker/moment.min.js')}}"></script>
@@ -177,6 +202,20 @@
 <script src="{{asset('backend/js/pages/datatable.init.js')}}"></script>
 <script src="{{asset('backend/js/pages/dashboard.js')}}"></script>
 <script src="{{asset('backend/js/app.min.js')}}"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        ClassicEditor.create(document.querySelector('#content'))
+            .catch(error => {
+                console.error(error);
+            });
+
+        ClassicEditor.create(document.querySelector('#contentAdd'))
+            .catch(error => {
+                console.error(error);
+            });
+    });
+</script>
+
 
 </body>
 </html>

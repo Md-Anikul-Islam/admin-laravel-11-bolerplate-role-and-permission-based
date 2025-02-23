@@ -20,6 +20,8 @@ class RoleController extends Controller
         $this->middleware('permission:role-delete', ['only' => ['destroy']]);
     }
 
+
+
     public function index(Request $request): View
     {
         $roles = Role::orderBy('id','DESC')->paginate(5);
