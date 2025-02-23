@@ -1,7 +1,7 @@
 # Project Setup
-'''
+"""
 composer update
-'''
+"""
 # Project Setup .env
 '''
 cp .env.example .env
